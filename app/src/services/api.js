@@ -1,69 +1,64 @@
-// src/services/api.js
-import axios from "axios";
-
-const API_URL = "http://localhost:8000/api/user";
-
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import api from "./axios"; // Import the Axios instance
 
 export const login = (email, password) => {
   return api.post("/login/", { email, password });
+};
+
+export const logout = () => {
+  const token = localStorage.getItem("refresh"); // Get token from localStorage
+  return api.post("/logout/", { token });
 };
 
 export const register = (name, username, email, password) => {
   return api.post("/register/", { name, username, email, password });
 };
 
-// / Employees API
-export const getEmployees = (token) => {
-  return api.get("/employees/", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+// Employees API
+export const getEmployees = () => {
+  return api.get("/employees/");
 };
 
-export const createEmployee = (data, token) => {
-  return api.post("/employees/", data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const getEmployeeDetail = (id) => {
+  return api.get(`/employees/${id}/`);
 };
 
-export const updateEmployee = (id, data, token) => {
-  return api.put(`/employees/${id}/`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const createEmployee = (data) => {
+  return api.post("/employees/", data);
+};
+
+export const updateEmployee = (id, data) => {
+  return api.put(`/employees/${id}/`, data);
 };
 
 export const deleteEmployee = (id, token) => {
-  return api.delete(`/employees/${id}/`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  return api.delete(`/employees/${id}/`);
 };
 
 // Rules API
-export const getRules = (token) => {
-  return api.get("/rules/", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const getRules = () => {
+  return api.get("/rules/");
 };
 
-export const createRule = (data, token) => {
-  return api.post("/rules/", data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const createRule = (data) => {
+  return api.post("/rules/", data);
 };
 
-export const updateRule = (id, data, token) => {
-  return api.put(`/rules/${id}/`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const updateRule = (id, data) => {
+  return api.put(`/rules/${id}/`, data);
 };
 
-export const deleteRule = (id, token) => {
-  return api.delete(`/rules/${id}/`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const deleteRule = (id) => {
+  return api.delete(`/rules/${id}/`);
+};
+
+export const evaluateRule = (employeeId, data) => {
+  return api.post(`/employees/${employeeId}/evaluate/`, data);
+};
+
+export const combineRules = (rules) => {
+  return api.post("/rules/combine/", { rules });
+};
+
+export const getRule = (ruleId) => {
+  return api.get(`/rules/${ruleId}/ `);
 };

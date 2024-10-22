@@ -1,7 +1,7 @@
 // src/components/Auth/Login.js
 import React, { useState } from "react";
 import { login } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link for navigation
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +14,7 @@ const Login = () => {
       const response = await login(email, password);
       console.log("Logged in successfully", response.data);
       localStorage.setItem("token", response.data.user.access);
+      localStorage.setItem("refresh", response.data.user.refresh);
       navigate("/"); // Redirect to home page
     } catch (error) {
       console.error("Error logging in", error);
@@ -28,8 +29,15 @@ const Login = () => {
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-4">
-          <div className="card p-4">
+        <div className="col-md-8 col-lg-6">
+          {" "}
+          {/* Increased width of the form */}
+          <div
+            className="card p-4"
+            style={{ height: "auto", minHeight: "400px" }}
+          >
+            {" "}
+            {/* Adjusted height */}
             <h2 className="text-center mb-4">Login</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -58,16 +66,23 @@ const Login = () => {
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">
+              <button type="submit" className="btn btn-primary w-100 mb-3">
                 Login
               </button>
               <button
                 type="button"
-                className="btn btn-secondary w-100 mt-3"
+                className="btn btn-secondary w-100"
                 onClick={handleSignup}
               >
                 Signup
               </button>
+              {/* Add message prompting users to go to the signup page */}
+              <p className="text-center mt-3">
+                Don't have an account?{" "}
+                <Link to="/signup" className="link-primary">
+                  Go to Signup
+                </Link>
+              </p>
             </form>
           </div>
         </div>

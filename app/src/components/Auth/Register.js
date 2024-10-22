@@ -1,7 +1,6 @@
-// src/components/Auth/Register.js
 import React, { useState } from "react";
 import { register } from "../../services/api";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate, Link } from "react-router-dom"; // Import Link for navigation
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -36,8 +35,15 @@ const Register = () => {
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-4">
-          <div className="card p-4">
+        <div className="col-md-8 col-lg-6">
+          {" "}
+          {/* Increased width of the form */}
+          <div
+            className="card p-4"
+            style={{ height: "auto", minHeight: "400px" }}
+          >
+            {" "}
+            {/* Adjusted height */}
             <h2 className="text-center mb-4">Register</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -96,9 +102,16 @@ const Register = () => {
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">
+              <button type="submit" className="btn btn-primary w-100 mb-3">
                 Register
               </button>
+              {/* Add message prompting users to go to the login page */}
+              <p className="text-center">
+                Already have an account?{" "}
+                <Link to="/login" className="link-primary">
+                  Go to Login
+                </Link>
+              </p>
             </form>
           </div>
         </div>
