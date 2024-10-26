@@ -9,7 +9,7 @@ const LogoutButton = () => {
     try {
       await logout();
       localStorage.setItem("token", null);
-      localStorage.removeItem("refresh-token"); // Clear the token from localStorage
+      localStorage.removeItem("refresh", null); // Clear the token from localStorage
       navigate("/login"); // Redirect to login page after logout
     } catch (error) {
       console.error("Logout failed:", error);
